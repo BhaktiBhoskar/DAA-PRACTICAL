@@ -1,0 +1,59 @@
+import random
+import time
+
+# Deterministic Quick Sort
+def deterministic_quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[-1]  # Last element as pivot
+
+    left = [x for x in arr[:-1] if x <= pivot]
+    right = [x for x in arr[:-1] if x > pivot]
+
+    return (deterministic_quick_sort(left)
+            + [pivot]
+            + deterministic_quick_sort(right))
+
+
+# Randomized Quick Sort
+def randomized_quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot_index = random.randint(0, len(arr) - 1)
+    pivot = arr[pivot_index]
+
+    left = [x for i, x in enumerate(arr)
+            if x <= pivot and i != pivot_index]
+
+    right = [x for i, x in enumerate(arr)
+             if x > pivot]
+
+    return (randomized_quick_sort(left)
+            + [pivot]
+            + randomized_quick_sort(right))
+
+
+# Main Program
+arr = [45, 12, 89, 33, 7, 56, 21, 90, 10]
+
+print("Original Array:", arr)
+
+# Deterministic Quick Sort
+start = time.perf_counter()
+sorted_arr1 = deterministic_quick_sort(arr)
+end = time.perf_counter()
+
+print("\nDeterministic Quick Sort:")
+print("Sorted Array:", sorted_arr1)
+print("Execution Time:", end - start, "seconds")
+
+# Randomized Quick Sort
+start = time.perf_counter()
+sorted_arr2 = randomized_quick_sort(arr)
+end = time.perf_counter()
+
+print("\nRandomized Quick Sort:")
+print("Sorted Array:", sorted_arr2)
+print("Execution Time:", end - start, "seconds")
